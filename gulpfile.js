@@ -42,7 +42,7 @@ function Webpack() {
         temp = temp.track();
 
     // use loopback-boot to compile the boot instructions and save them to a
-    // temprary file. we create a resolve alias below so that
+    // temporary file. we create a resolve alias below so that
     // require('boot-instructions.json') will be resolved correctly.
     debug('Compiling boot instructions');
 
@@ -87,8 +87,9 @@ function Webpack() {
     // Construct the dependency map for loopback-boot. It resolves all of the
     // dynamic module dependencies specified by the boot instructions:
     //  * model definition js files
-    //  * boot scripts
+    //  * component dependencies
     //  * middleware dependencies
+    //  * boot scripts
     //  Note: model JSON files are included in the instructions themselves so
     //  are not bundled directly.
     var dependencyMap = {};
@@ -122,8 +123,9 @@ function Webpack() {
     // loopback-boot. We also externalise our config.json and datasources.json
     // configuration files.
     function externalsHandler(context, request, callback) {
-        // externalise dynamic config files. all references are re-written
-        // to expect them in the config file directory.
+        // externalise dynamic config files.
+        // NOTE: if you intend to deploy these config files in the same
+        // directory as the bundle, change the result to `./${m[1]}.json`
         var m = request.match(/(?:^|[\/\\])(config|datasources)\.json$/);
         if(m) return callback(null, `../server/${m[1]}.json`);
         // externalise if the path begins with a node_modules name or if it's
