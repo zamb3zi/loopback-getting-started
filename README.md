@@ -4,6 +4,8 @@ This is a fork of the [Getting started with LoopBack](http://docs.strongloop.com
 
 This follows the general outline of [Simon Degraeve](https://github.com/SimonDegraeve)'s [loopback-webpack-plugin](https://github.com/SimonDegraeve/loopback-webpack-plugin) which appears to have been abandoned and no longer working. We also draw on ideas from [webpack-node-externals](https://github.com/liady/webpack-node-externals).
 
+This could be developed into a webpack plugin at some point, but as an example it's clearer to configure webpack this way.
+
 The key features of the approach are:
 * Rather than call `boot()` at runtime, we perform a `loopback-boot` *compile* at build time and store the resulting boot instructions as a bundled JSON resource.
 * At runtime, we just call the `loopback-boot` executor to perform the boot. This avoids many problems trying to bundle the compiler and also provides much faster boot times for complex applications.
