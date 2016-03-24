@@ -130,10 +130,13 @@ function Webpack() {
         if(m) return callback(null, `../server/${m[1]}.json`);
         // externalise if the path begins with a node_modules name or if it's
         // an absolute path containing /node_modules/ (the latter results from
-        // loopback middleware dependencies).
+        // loopback component and middleware dependencies).
         const pathBase = request.split(/[\/\\]/)[0];
-        if(nodeModules.has(pathBase) || /[\/\\]node_modules[\/\\]/.test(request))
+        if(nodeModules.has(pathBase))
             return callback(null, 'commonjs ' + request);
+        m = request.match(/[\/\\]node_modules[\/\\](.*)$/);
+        if(m)
+            return callback(null, 'commonjs ' + m[1].replace(/\\/g, '/'));
         // otherwise internalise (bundle) the request.
         callback();
     };
