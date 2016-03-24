@@ -7,6 +7,7 @@ This follows the general outline of [Simon Degraeve](https://github.com/SimonDeg
 The key features of the approach are:
 * Rather than call `boot()` at runtime, we perform a `loopback-boot` *compile* at build time and store the resulting boot instructions as a bundled JSON resource.
 * At runtime, we just call the `loopback-boot` executor to perform the boot. This avoids many problems trying to bundle the compiler and also provides much faster boot times for complex applications.
+* No browserify!
 * We specify which `node_modules` dependencies will be bundled (internalized) and which will not. `loopback-boot/lib/executor` must be bundled so webpack can handle resolution of models, boot scripts, etc.
 * Dynamic configuration files (such as `config.json` and `datasources.json`) are excluded from the bundle (externalized) so that they can be modified without re-building.
 * [gulp](http://gulpjs.com) is used trivially to perform the build.
@@ -14,8 +15,8 @@ The key features of the approach are:
 #### Installation
 
 ```bash
-git clone git://github.com/zamb3zi/loopback-getting-started
-cd loopback-getting-started
+git clone git://github.com/zamb3zi/loopback-webpack-example
+cd loopback-webpack-example
 npm install
 gulp
 node build/main.bundle.js
