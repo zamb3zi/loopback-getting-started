@@ -120,15 +120,12 @@ function Webpack() {
     // we define a master externals handler that takes care of externalising
     // node_modules (largely copied from webpack-node-externals) except for
     // loopback-boot. We also externalise our config.json and datasources.json
-    // configuration files ##### as well as any font and image files and other file extensions.
+    // configuration files.
     function externalsHandler(context, request, callback) {
         // externalise dynamic config files. all references are re-written
         // to expect them in the config file directory.
         var m = request.match(/(?:^|[\/\\])(config|datasources)\.json$/);
         if(m) return callback(null, `../server/${m[1]}.json`);
-        // the following extensions are not bundled and must be deployed as necessary.
-        //if(/\.(orig|txt|ttf|jpg|ts|rar)$/.test(request))
-        //    return callback(null, request);
         // externalise if the path begins with a node_modules name or if it's
         // an absolute path containing /node_modules/ (the latter results from
         // loopback middleware dependencies).
