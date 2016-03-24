@@ -73,11 +73,11 @@ function Webpack() {
     };
     relativeSourceFiles(ins.models);
     relativeSourceFiles(ins.components);
+    var middleware = ins.middleware && ins.middleware.middleware;
     relativeSourceFiles(middleware);
     var bootFiles = ins.files && ins.files.boot;
     if(bootFiles)
         bootFiles = ins.files.boot = bootFiles.map(relative);
-    var middleware = ins.middleware && ins.middleware.middleware;
 
     var instructionsFile = temp.openSync({prefix: 'boot-instructions-', suffix: '.json'});
     fs.writeSync(instructionsFile.fd, JSON.stringify(ins, null, argv.saveInstructions && '\t'));
