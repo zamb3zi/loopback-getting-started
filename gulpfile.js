@@ -7,7 +7,8 @@ debug.enable(debugName);
 debug = debug(debugName);
 
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var log = require('fancy-log');
+var PluginError = require('plugin-error');
 var path = require('path');
 var fs = require('fs');
 var temp = require('temp');
@@ -25,8 +26,8 @@ var paths = {
 
 gulp.task('default', function(done) {
     Webpack().run(function(err, stats) {
-        if(err) throw new gutil.PluginError('webpack', err);
-        gutil.log('[webpack]', stats.toString({
+        if(err) throw new PluginError('webpack', err);
+        log('[webpack]', stats.toString({
             colors: true,
         }));
         done();
